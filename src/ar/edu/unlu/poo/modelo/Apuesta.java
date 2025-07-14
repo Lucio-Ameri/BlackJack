@@ -168,15 +168,14 @@ public class Apuesta {
             case GANO -> situacion = "GANO!";
             case EMPATO -> situacion = "EMPATO!";
             case PERDIO -> situacion = "PERDIO!";
-            case JUGANDO -> situacion = "JUGANDO!";
         }
 
-        if(estado != EstadoDeLaApuesta.JUGANDO) {
-            return String.format(" --- MONTO APOSTADO: $.2f --- SEGURO APOSTADO: $.2f --- SITUACION: %s", getMontoApostado(),
-                    (estaAsegurado()) ? getSeguroApostado() : 0.0, situacion);
+        if(estado == EstadoDeLaApuesta.JUGANDO) {
+            return String.format(" --- MONTO APOSTADO: $%.2f --- SEGURO APOSTADO: $%.2f ", getMontoApostado(),
+                    (estaAsegurado()) ? getSeguroApostado() : 0.0);
         }
 
-        return String.format(" --- MONTO APOSTADO: $.2f --- SEGURO APOSTADO: $.2f --- SITUACION: %s --- DEALER PAGA: %.2f", getMontoApostado(),
+        return String.format(" --- MONTO APOSTADO: $%.2f --- SEGURO APOSTADO: $%.2f --- SITUACION: %s --- DEALER PAGA: $%.2f", getMontoApostado(),
                 (estaAsegurado()) ? getSeguroApostado() : 0.0, situacion, (ganancias != null) ? getGanancias() : 0.0);
     }
 }

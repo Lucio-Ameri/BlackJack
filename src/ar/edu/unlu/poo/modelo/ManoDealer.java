@@ -8,6 +8,7 @@ public class ManoDealer extends Mano{
 
     public ManoDealer(){
         super();
+        cambiarEstadoDeLaMano(EstadoDeLaMano.EN_JUEGO);
     }
 
 
@@ -76,9 +77,9 @@ public class ManoDealer extends Mano{
         String s = "";
 
         for(Carta c: cartas){
-            s.concat(c.toString());
+            s += c.toString();
         }
 
-        return s + " --- ESTADO DE LA MANO: " + getEstado() + ".\n\n";
+        return s + " --- TOTAL: [ "+ getTotalMano() + " ] " + " --- ESTADO DE LA MANO: " + getEstado() + ".\n\n";
     }
 }

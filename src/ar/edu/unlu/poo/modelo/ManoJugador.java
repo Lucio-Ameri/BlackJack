@@ -153,9 +153,9 @@ public class ManoJugador extends Mano{
         String s = " --- MANO: ";
 
         for(Carta c: cartas){
-            s.concat(c.toString());
+            s += c.toString();
         }
 
-        return s + " --- TOTAL MANO: " + getTotalMano() + " --- ESTADO DE LA MANO: " + getEstado() + envite.toString() + "\n";
+        return s + " --- TOTAL MANO: [ " + getTotalMano() + " ]  --- ESTADO DE LA MANO: " + getEstado() + envite.toString() + "\n";
     }
 }

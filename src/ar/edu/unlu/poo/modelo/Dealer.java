@@ -66,6 +66,6 @@ public class Dealer {
     @Override
     public String toString(){
         String s = "MANO DEALER: ";
-        return s.concat(mano.toString());
+        return s += mano.toString();
     }
 }

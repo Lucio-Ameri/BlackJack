@@ -1,6 +1,10 @@
 package ar.edu.unlu.poo.modelo;
 
+import ar.edu.unlu.poo.modelo.estados.PaloCarta;
+import ar.edu.unlu.poo.modelo.estados.ValorCarta;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Baraja {
@@ -25,11 +29,21 @@ public class Baraja {
     }
 
     private void crearCartas(){
+        ValorCarta[] valores = ValorCarta.values();
+        PaloCarta[] palos = PaloCarta.values();
 
+        for(int i = 0; i < 8; i++){
+            for(PaloCarta p: palos){
+                for(ValorCarta v: valores){
+
+                    baraja.add(new Carta(p, v));
+                }
+            }
+        }
     }
 
     private void mezclarCartas(){
-
+        Collections.shuffle(baraja);
     }
 
     public Carta repartir(){

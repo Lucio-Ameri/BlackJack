@@ -72,7 +72,7 @@ public class Jugador {
         int i = 1;
 
         for(ManoJugador m: manos){
-            s.concat(m.toString());
+            s += m.toString();
             i++;
         }
 
