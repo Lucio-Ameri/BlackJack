@@ -73,7 +73,7 @@ public class ManoDealer extends Mano{
     @Override
     public String toString(){
         List<Carta> cartas = getCartasDeLaMano();
-        String s = " ";
+        String s = "";
 
         for(Carta c: cartas){
             s.concat(c.toString());
