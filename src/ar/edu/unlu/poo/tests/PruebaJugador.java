@@ -91,10 +91,12 @@ public class PruebaJugador {
         // teste que funcione bien rendirme
         Jugador j6 = new Jugador("Mariana", 1000.0);
         ManoJugador m6 = new ManoJugador(300.0);
+        dealer.retirarDineroJugador(j6, 300.0);
         j6.agregarMano(m6);
         m6.recibirCarta(new Carta(PaloCarta.CORAZONES, ValorCarta.CINCO));
         m6.recibirCarta(new Carta(PaloCarta.CORAZONES, ValorCarta.CINCO));
         m6.rendirme();
         System.out.println(j6.toString());
+        System.out.println("SALDO: " + j6.getMontoSaldo());
     }
 }

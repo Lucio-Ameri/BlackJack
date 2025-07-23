@@ -53,6 +53,10 @@ public class Dealer {
         j.removerMano(manoJ);
     }
 
+    public void retirarDineroJugador(Jugador j, double monto){
+        j.recibirDinero(- monto);
+    }
+
     public void eliminarJugador(Jugador j){
         List<ManoJugador> manos = j.getManos();
 
