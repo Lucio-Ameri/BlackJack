@@ -150,8 +150,7 @@ public class ManoJugador extends Mano{
     @Override
     public String toString(){
         List<Carta> cartas = getCartasDeLaMano();
-        String s = " --- MANO: ";
-
+        String s = "";
         for(Carta c: cartas){
             s += c.toString();
         }

@@ -68,10 +68,11 @@ public class Jugador {
 
     @Override
     public String toString(){
-        String s = "JUGADOR " + nombre + ": \n";
+        String s = "JUGADOR " + nombre + "    SALDO: $" + getMontoSaldo() + " :\n";
         int i = 1;
 
         for(ManoJugador m: manos){
+            s += " --- MANO " + i + ": ";
             s += m.toString();
             i++;
         }

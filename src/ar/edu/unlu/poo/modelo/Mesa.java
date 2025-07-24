@@ -110,7 +110,9 @@ public class Mesa {
             }
 
             case TURNO_DEALER -> {
+                empezarTurnoDelDealer();
                 cambiarEstadoDeLaMesa(EstadoDeLaMesa.REPARTIENDO_GANANCIAS);
+
                 reiniciarConfirmados();
                 //notificar cambio de estado para actualizar vista e indicar que se repartieron las ganancias.
 
@@ -205,7 +207,7 @@ public class Mesa {
     public Eventos inscribirJugadorNuevo(Jugador j, double monto){
         if(!inscriptos.contains(j)){
 
-            if(estado != EstadoDeLaMesa.ACEPTANDO_INSCRIPCIONES){
+            if(estado == EstadoDeLaMesa.ACEPTANDO_INSCRIPCIONES){
 
                 if(hayLugaresDisponibles()){
                     lugaresDisponibles --;
@@ -400,14 +402,8 @@ public class Mesa {
         return Eventos.NO_ES_SU_TURNO;
     }
 
-    public List<Carta> getManoDealer(){
-        ManoDealer mano = dealer.getMano();
-        return mano.getCartasDeLaMano();
-    }
-
-    public int getTotalDealer(){
-        ManoDealer mano = dealer.getMano();
-        return mano.getTotalMano();
+    public Dealer getDealer(){
+        return dealer;
     }
 
     public EstadoDeLaMesa getEstado(){
