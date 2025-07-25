@@ -4,6 +4,8 @@ import ar.edu.unlu.poo.modelo.Jugador;
 import ar.edu.unlu.poo.modelo.Mesa;
 import ar.edu.unlu.poo.modelo.acciones.Accion;
 
+import java.util.List;
+
 public class PruebaMesa {
     public static void main(String[] args) {
 
@@ -83,16 +85,47 @@ public class PruebaMesa {
         System.out.println(j1.toString());
         System.out.println(j2.toString());
 
+        //empieza el turno del dealer y reparte las ganancias.
+        ronda.confirmarParticipacion(j1);
+        ronda.confirmarParticipacion(j2);
 
+        System.out.println(j1.toString());
+        System.out.println(j2.toString());
+        System.out.println(ronda.getDealer().toString());
 
-        /*
-        *
-        *
-        *  EMPEZAR A JUGAR EL TURNO DEL DEALER.
-        *
-        *
-        * */
+        System.out.println("ESTADO DE LA MESA LUEGO DE JUGAR TURNO DEALER: " + ronda.getEstado());
+        System.out.println();
 
+        //jugadores confirman para poder eliminar las manos y poder reinscribirse.
+        ronda.confirmarParticipacion(j1);
+        ronda.confirmarParticipacion(j2);
+
+        System.out.println("ESTADO DE LA MESA LUEGO DE CONFIRMAR PARA PODER REINSCRIBIRSE: " + ronda.getEstado());
+        System.out.println();
+
+        System.out.println(j1.toString());
+        System.out.println(j2.toString());
+
+        //jugadores se reinscriben o se dan de baja.
+        ronda.confirmarNuevaParticipacion(j1, 200.0, true);
+        ronda.confirmarNuevaParticipacion(j2, 0.0, false);
+
+        System.out.println("ESTADO DE LA MESA LUEGO DE CONFIRMAR SI SIGUEN O NO: " + ronda.getEstado());
+        System.out.println();
+
+        //nuevo jugador se inscribe.
+        Jugador j3 = new Jugador("Melina", 1000.0);
+        ronda.inscribirJugadorNuevo(j3, 500);
+
+         /*
+        List<Jugador> jugadores = ronda.aquellosQueJuegan();                      // Esta parte sirve para ver si efectivamente se dio de baja al j2 y j3 fue ingresado.
+        for(Jugador j: jugadores){                                                // Hay que comentar una parte de aquellosQueJuegan para poder verlo.
+            System.out.println(j.toString());
+        }
+         */
+
+        //ver si retirarme de la ronda funciona.
+        System.out.println(ronda.retirarmeDeLaMesa(j1));
 
     }
 }

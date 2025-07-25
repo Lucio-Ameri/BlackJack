@@ -80,6 +80,10 @@ public class ManoDealer extends Mano{
             s += c.toString();
         }
 
-        return s + " --- TOTAL: [ "+ getTotalMano() + " ] " + " --- ESTADO DE LA MANO: " + getEstado() + ".\n\n";
+        if(cartas.size() != 2) {
+            return s + " --- TOTAL: [ " + getTotalMano() + " ] " + " --- ESTADO DE LA MANO: " + getEstado() + ".\n\n";
+        }
+
+        return s + " --- TOTAL: [ " + getTotalMano() + " ] " + " --- ESTADO DE LA MANO: ESPERANDO QUE TERMINEN LOS TURNOS DE LOS JUGADORES.\n\n";
     }
 }

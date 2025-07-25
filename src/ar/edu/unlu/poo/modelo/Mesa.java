@@ -183,7 +183,6 @@ public class Mesa {
         }
 
         dealer.definirResultados(inscriptos);
-        actualizarEstadoDeLaMesa();
     }
 
     public void confirmarNuevaParticipacion(Jugador j, double monto, boolean participo){
