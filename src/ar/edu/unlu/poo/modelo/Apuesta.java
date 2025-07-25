@@ -159,7 +159,7 @@ public class Apuesta {
     }
 
 
-    //metodo: devuelve un string personalizado que representa la información de la carta.
+    //metodo: devuelve un string personalizado que representa la información de la Apuesta.
     @Override
     public String toString(){
         String situacion = "";

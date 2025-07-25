@@ -27,14 +27,20 @@ public class Mesa {
         this.lugaresDisponibles = 7;
     }
 
+
+    //metodo: cambia el estado de la mesa por uno nuevo pasado por parametro.
     private void cambiarEstadoDeLaMesa(EstadoDeLaMesa en){
         estado = en;
     }
 
+
+    //metodo: informa si la mesa posee lugares disponibles.
     public boolean hayLugaresDisponibles(){
         return lugaresDisponibles > 0;
     }
 
+
+    //metodo: coloca en false el estado de todos los items de CONFIRMADOS.
     private void reiniciarConfirmados(){
         if(!confirmados.isEmpty()) {
             for (Map.Entry<Jugador, Boolean> valoresContenidos : confirmados.entrySet()) {
@@ -43,6 +49,8 @@ public class Mesa {
         }
     }
 
+
+    //metodo: jugador confirma su participacion, cambiando el estado de su item en confirmados.
     public void confirmarParticipacion(Jugador j){
         if(!confirmados.get(j)){
             confirmados.put(j, true);
@@ -50,6 +58,8 @@ public class Mesa {
         }
     }
 
+
+    //metodo: informa si todos los participantes de confirmados estan en true.
     private boolean todosConfirmaron(){
         if(confirmados.isEmpty()){
             return false;
@@ -64,6 +74,8 @@ public class Mesa {
         return true;
     }
 
+
+    //metodo: informa si el turno actual pertenece al jugador que pregunta.
     private boolean esTurnoDeEsteJugador(Jugador j){
         if(turnoActual != null){
             return j == turnoActual;
@@ -72,6 +84,8 @@ public class Mesa {
         return false;
     }
 
+
+    //metodo: actualiza el estado de la mesa segun las condiciones que tenga la misma.
     private void actualizarEstadoDeLaMesa(){
         switch(estado){
             case ACEPTANDO_INSCRIPCIONES -> {
@@ -140,6 +154,8 @@ public class Mesa {
         }
     }
 
+
+    //metodo: reparte las cartas a todos los jugadores y al dealer para poder empezar el jueguo.
     private void repartirLasCartasIniciales(){
         ManoDealer manoD = dealer.getMano();
 
@@ -157,10 +173,14 @@ public class Mesa {
         }
     }
 
+
+    //metodo: informa si todos los jugadores jugaron.
     private boolean jugaronTodosLosJugadores(){
         return inscriptos.size() == (inscriptos.indexOf(turnoActual) + 1);
     }
 
+
+    //metodo: pasa el turno al siguiente jugador, si es que hay mas jugadores que faltan jugar, sino actualiza el estado de la mesa.
     private void pasarTurnoAlSiguienteJugador(){
         if(jugaronTodosLosJugadores()){
             turnoActual = null;
@@ -174,6 +194,8 @@ public class Mesa {
         actualizarEstadoDeLaMesa();
     }
 
+
+    //metodo: empieza el turno del dealer para luego calcular resultados.
     private void empezarTurnoDelDealer(){
         dealer.revelarMano();
         ManoDealer mano = dealer.getMano();
@@ -185,6 +207,8 @@ public class Mesa {
         dealer.definirResultados(inscriptos);
     }
 
+
+    //metodo: confirma la nueva participacion si es que el jugador quiere volver a jugar.
     public void confirmarNuevaParticipacion(Jugador j, double monto, boolean participo){
         if(participo){
             dealer.retirarDineroJugador(j, monto);
@@ -203,6 +227,8 @@ public class Mesa {
         actualizarEstadoDeLaMesa();
     }
 
+
+    //metodo: inscribe a un jugador a la mesa si es que es posible.
     public Eventos inscribirJugadorNuevo(Jugador j, double monto){
         if(!inscriptos.contains(j)){
 
@@ -229,18 +255,25 @@ public class Mesa {
         return Eventos.JUGADOR_YA_INSCRIPTO;
     }
 
+
+    //metodo: permito al jugador apostar una nueva mano si es que es posible.
     public Eventos apostarOtraMano(Jugador j, double monto){
         if(!confirmados.get(j)){
 
             if(estado == EstadoDeLaMesa.ACEPTANDO_INSCRIPCIONES){
 
                 if(hayLugaresDisponibles()){
-                    lugaresDisponibles --;
-                    j.agregarMano(new ManoJugador(monto));
-                    dealer.retirarDineroJugador(j, monto);
 
-                    actualizarEstadoDeLaMesa();
-                    return Eventos.ACCION_REALIZADA;
+                    if(j.transferenciaRealizable(monto)) {
+                        lugaresDisponibles--;
+                        j.agregarMano(new ManoJugador(monto));
+                        dealer.retirarDineroJugador(j, monto);
+
+                        actualizarEstadoDeLaMesa();
+                        return Eventos.ACCION_REALIZADA;
+                    }
+
+                    return Eventos.SALDO_INSUFICIENTE;
                 }
 
                 return Eventos.SIN_LUGARES_DISPONIBLES;
@@ -252,6 +285,8 @@ public class Mesa {
         return Eventos.JUGADOR_CONFIRMADO;
     }
 
+
+    //metodo: permito al jugador eliminar una apuesta que realiza si es que esta es posible de eliminar.
     public Eventos retirarUnaMano(Jugador j, ManoJugador mano){
         if(!confirmados.get(j)){
 
@@ -273,6 +308,8 @@ public class Mesa {
         return Eventos.JUGADOR_CONFIRMADO;
     }
 
+
+    //metodo: remuevo al jugador de la mesa si se cumplen las condiciones.
     public Eventos retirarmeDeLaMesa(Jugador j){
         if(!confirmados.get(j)){
 
@@ -293,6 +330,8 @@ public class Mesa {
         return Eventos.JUGADOR_CONFIRMADO;
     }
 
+
+    //metodo: segun la accion informada a realizar, el jugador juega su turno, y dependiendo de las condiciones, esto se realiza o no.
     public Eventos jugadorJuegaSuTurno(Accion a, Jugador j, ManoJugador mano){
         if(esTurnoDeEsteJugador(j)) {
 
@@ -401,14 +440,20 @@ public class Mesa {
         return Eventos.NO_ES_SU_TURNO;
     }
 
+
+    //metodo: devuelvo al dealer.
     public Dealer getDealer(){
         return dealer;
     }
 
+
+    //metodo: devuelvo el estado de la mesa.
     public EstadoDeLaMesa getEstado(){
         return estado;
     }
 
+
+    //metodo: devuelvo el nombre del jugador con el turno actual.
     public String getJugadorTurnoActual(){
         if(turnoActual == null){
             return "";
@@ -417,6 +462,8 @@ public class Mesa {
         return turnoActual.getNombre();
     }
 
+
+    //metodo: devuelvo la lista de jugadores que estan jugando.
     public List<Jugador> aquellosQueJuegan(){
 
         if(estado == EstadoDeLaMesa.ACEPTANDO_INSCRIPCIONES || estado == EstadoDeLaMesa.FINALIZANDO_RONDA){

@@ -15,10 +15,14 @@ public class Baraja {
         generarBaraja();
     }
 
+
+    //metodo: informa si la baraja esta vacia o no.
     private boolean barajaVacia(){
         return baraja.isEmpty();
     }
 
+
+    //metodo: genera una baraja con nuevas cartas.
     private void generarBaraja(){
         if(barajaVacia()) {
             baraja.clear();
@@ -28,6 +32,8 @@ public class Baraja {
         mezclarCartas();
     }
 
+
+    //metodo: genera 8 mazos de cartas en la baraja.
     private void crearCartas(){
         ValorCarta[] valores = ValorCarta.values();
         PaloCarta[] palos = PaloCarta.values();
@@ -42,10 +48,14 @@ public class Baraja {
         }
     }
 
+
+    //metodo: mezcla las cartas de la baraja.
     private void mezclarCartas(){
         Collections.shuffle(baraja);
     }
 
+
+    //metodo: remueve y devuelve la primer carta de la baraja.
     public Carta repartir(){
         return baraja.remove(0);
     }
