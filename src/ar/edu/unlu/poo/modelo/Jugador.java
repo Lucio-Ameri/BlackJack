@@ -69,6 +69,13 @@ public class Jugador implements IJugador {
     }
 
 
+
+    //metodo: informa si el jugador puede realizar la transferencia deseada o no.
+    public boolean transferenciaRealizable(double cantidad){
+        return saldo.puedoRealizarLaTransferencia(cantidad);
+    }
+
+
     //metodo: actualizo el saldo del jugador, ya sea con un monto negativo o positivo.
     public void actualizarSaldo(double monto){
         saldo.actualizarMonto(monto);

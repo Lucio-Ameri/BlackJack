@@ -1,10 +1,11 @@
 package ar.edu.unlu.poo.modelo;
 
+import ar.edu.unlu.poo.interfaz.IDealer;
 import ar.edu.unlu.poo.interfaz.IManoDealer;
 
 import java.util.List;
 
-public class Dealer {
+public class Dealer implements IDealer {
     private ManoDealer mano;
     private Baraja baraja;
 
@@ -17,6 +18,7 @@ public class Dealer {
         return mano;
     }
 
+    @Override
     public IManoDealer getInterfazMano(){
         return mano;
     }
