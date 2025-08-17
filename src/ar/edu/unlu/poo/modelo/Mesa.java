@@ -90,7 +90,7 @@ public class Mesa {
                 if(todosConfirmaron()){
                     repartirLasCartasIniciales();
                     turnoActual = inscriptos.get(0);
-                    cambiarEstadoDeLaMesa(EstadoDeLaMesa.REPARTIENDO_CARTAS);
+                    cambiarEstadoDeLaMesa(EstadoDeLaMesa.TURNO_JUGADOR);
                     //notificar cambio de estado para actualizar vista e informar quien juega.
                 }
 
