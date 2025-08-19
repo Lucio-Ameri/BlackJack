@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Mesa {
+public class Mesa implements ar.edu.unlu.poo.interfaz.IMesa {
     private List<Jugador> inscriptos;
     private HashMap<Jugador, Boolean> confirmados;
     private EstadoDeLaMesa estado;
@@ -27,6 +27,11 @@ public class Mesa {
         this.dealer = new Dealer();
         this.turnoActual = null;
         this.lugaresDisponibles = 7;
+    }
+
+
+    public boolean jugadorEnLaMesa(Jugador j){
+        return inscriptos.contains(j);
     }
 
     private void cambiarEstadoDeLaMesa(EstadoDeLaMesa en){
@@ -45,6 +50,8 @@ public class Mesa {
         }
     }
 
+
+    @Override
     public void confirmarParticipacion(Jugador j){
         if(!confirmados.get(j)){
             confirmados.put(j, true);
@@ -190,6 +197,8 @@ public class Mesa {
         dealer.definirResultados(inscriptos);
     }
 
+
+    @Override
     public void confirmarNuevaParticipacion(Jugador j, double monto, boolean participacion){
         if(participacion){
             dealer.retirarDineroJugador(j, monto);
@@ -232,6 +241,7 @@ public class Mesa {
         return Eventos.JUGADOR_YA_INSCRIPTO;
     }
 
+    @Override
     public Eventos apostarOtraMano(Jugador j, double monto){
         if(!confirmados.get(j)){
             if(estado == EstadoDeLaMesa.ACEPTANDO_INSCRIPCIONES){
@@ -257,6 +267,7 @@ public class Mesa {
         return Eventos.JUGADOR_CONFIRMADO;
     }
 
+    @Override
     public Eventos retirarUnaMano(Jugador j, ManoJugador mano){
         if(!confirmados.get(j)){
             if(estado == EstadoDeLaMesa.ACEPTANDO_INSCRIPCIONES){
@@ -276,6 +287,8 @@ public class Mesa {
         return Eventos.JUGADOR_CONFIRMADO;
     }
 
+
+    @Override
     public Eventos retirarmeDeLaMesa(Jugador j){
         if(!confirmados.get(j)){
             if(estado == EstadoDeLaMesa.ACEPTANDO_INSCRIPCIONES){
@@ -295,6 +308,8 @@ public class Mesa {
         return Eventos.JUGADOR_CONFIRMADO;
     }
 
+
+    @Override
     public Eventos jugadorJuegaSuTurno(Accion a, Jugador j, ManoJugador m){
         if(esTurnoDeEsteJugador(j)){
             switch (a){
@@ -401,14 +416,20 @@ public class Mesa {
         return Eventos.NO_ES_SU_TURNO;
     }
 
+
+    @Override
     public IDealer getDealer(){
         return dealer;
     }
 
+
+    @Override
     public EstadoDeLaMesa getEstado(){
         return estado;
     }
 
+
+    @Override
     public String getJugadorTurnoActual(){
         if(turnoActual == null){
             return "NO ES TURNO DE NADIE.";
@@ -417,6 +438,8 @@ public class Mesa {
         return turnoActual.getNombre();
     }
 
+
+    @Override
     public List<IJugador> getInscriptos(){
         List<IJugador> jugadores = new ArrayList<IJugador>();
 
