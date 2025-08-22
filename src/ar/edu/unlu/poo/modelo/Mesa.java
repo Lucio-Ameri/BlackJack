@@ -30,18 +30,25 @@ public class Mesa implements ar.edu.unlu.poo.interfaz.IMesa {
     }
 
 
+    //metodo: informa si el jugador pasado por parametro se encuentra dentro de la lista de inscriptos.
     public boolean jugadorEnLaMesa(Jugador j){
         return inscriptos.contains(j);
     }
 
+
+    //metodo: cambia el estado de la mesa por uno nuevo pasado por parametro.
     private void cambiarEstadoDeLaMesa(EstadoDeLaMesa en){
         estado = en;
     }
 
+
+    //metodo: informa si hay lugares disponibles dentro de la mesa.
     public boolean hayLugaresDisponibles(){
         return lugaresDisponibles > 0;
     }
 
+
+    //metodo: reinicia el mapa de confirmados para futuros nuevos usos.
     private void reiniciarConfirmados(){
         if(!confirmados.isEmpty()){
             for(Map.Entry<Jugador, Boolean> valoresContenidos : confirmados.entrySet()){
@@ -51,6 +58,7 @@ public class Mesa implements ar.edu.unlu.poo.interfaz.IMesa {
     }
 
 
+    //metodo: confirma la participacion del jugador pasado por parametro.
     @Override
     public void confirmarParticipacion(Jugador j){
         if(!confirmados.get(j)){
@@ -59,6 +67,8 @@ public class Mesa implements ar.edu.unlu.poo.interfaz.IMesa {
         }
     }
 
+
+    //metodo: informa si todos dentro de la mesa confirmaron para poder pasar a la proxima instancia.
     private boolean todosConfirmaron(){
         if(confirmados.isEmpty()){
             return false;
@@ -73,6 +83,8 @@ public class Mesa implements ar.edu.unlu.poo.interfaz.IMesa {
         return true;
     }
 
+
+    //metodo: informa si es turno del jugador que quiere realizar una accion.
     private boolean esTurnoDeEsteJugador(Jugador j){
         if(turnoActual != null){
             return j == turnoActual;
@@ -81,6 +93,8 @@ public class Mesa implements ar.edu.unlu.poo.interfaz.IMesa {
         return false;
     }
 
+
+    //metodo: actualiza el estado de la mesa, segun las condiciones provistas.
     private void actualizarEstadoDeLaMesa(){
         switch (estado){
             case ACEPTANDO_INSCRIPCIONES -> {
@@ -148,6 +162,8 @@ public class Mesa implements ar.edu.unlu.poo.interfaz.IMesa {
         }
     }
 
+
+    //metodo: reparte las 2 primeras cartas a todos los jugadores y al dealer para poder empezar los turnos.
     private void repartirLasCartasIniciales(){
         ManoDealer manoD = dealer.getMano();
 
@@ -166,10 +182,14 @@ public class Mesa implements ar.edu.unlu.poo.interfaz.IMesa {
         }
     }
 
+
+    //metodo: informa si todos los jugadores ya jugaron su turno.
     private boolean jugaronTodos(){
         return inscriptos.size() == (inscriptos.indexOf(turnoActual) + 1);
     }
 
+
+    //metodo: pasa el turno al proximo juagdor que se encuentra en la lista de inscriptos. En caso de que ya hayan jugado todos, coloca el "turno actual" en null, y luego cambia el estado.
     private void pasarTurnoAlSiguienteJugador(){
         if(jugaronTodos()){
             turnoActual = null;
@@ -183,6 +203,8 @@ public class Mesa implements ar.edu.unlu.poo.interfaz.IMesa {
         actualizarEstadoDeLaMesa();
     }
 
+
+    //metodo: funcion que juga el turno del dealer segun las reglas del juego, para luego definir los resultados.
     private void empezarTurnoDelDealer(){
         dealer.revelarMano();
         //notificar cambio de la mano del dealer.
@@ -198,6 +220,7 @@ public class Mesa implements ar.edu.unlu.poo.interfaz.IMesa {
     }
 
 
+    //metodo: permite al jugador decidir si una vez repartidas las ganancias, si este quiere irse de la mesa o jugar otra ronda.
     @Override
     public void confirmarNuevaParticipacion(Jugador j, double monto, boolean participacion){
         if(participacion){
@@ -217,6 +240,8 @@ public class Mesa implements ar.edu.unlu.poo.interfaz.IMesa {
         actualizarEstadoDeLaMesa();
     }
 
+
+    //metodo: inscribe a un jugador pasado por parametro, junto a la apuesta que este realiza para poder entrar en la mesa.
     public Eventos inscribirJugadorNuevo(Jugador j, double monto){
         if(!inscriptos.contains(j)){
             if(estado == EstadoDeLaMesa.ACEPTANDO_INSCRIPCIONES){
@@ -241,6 +266,8 @@ public class Mesa implements ar.edu.unlu.poo.interfaz.IMesa {
         return Eventos.JUGADOR_YA_INSCRIPTO;
     }
 
+
+    //metodo: permite al jugador inscripto apostar mas manos si es que no confirmo su participacion.
     @Override
     public Eventos apostarOtraMano(Jugador j, double monto){
         if(!confirmados.get(j)){
@@ -267,6 +294,8 @@ public class Mesa implements ar.edu.unlu.poo.interfaz.IMesa {
         return Eventos.JUGADOR_CONFIRMADO;
     }
 
+
+    //metodo: permite al jugador retirar una apuesta si es que este no confirmo su participacion.
     @Override
     public Eventos retirarUnaMano(Jugador j, ManoJugador mano){
         if(!confirmados.get(j)){
@@ -288,6 +317,7 @@ public class Mesa implements ar.edu.unlu.poo.interfaz.IMesa {
     }
 
 
+    //metodo: permite al jugador inscripto retirarse de la mesa, limpiando sus atributos de apuestas y devolviendole el dinero.
     @Override
     public Eventos retirarmeDeLaMesa(Jugador j){
         if(!confirmados.get(j)){
@@ -309,6 +339,7 @@ public class Mesa implements ar.edu.unlu.poo.interfaz.IMesa {
     }
 
 
+    //metodo: permite al jugador jugar el turno, dependiendo de la accion que quiera realizar y sobre la mano que este juegue.
     @Override
     public Eventos jugadorJuegaSuTurno(Accion a, Jugador j, ManoJugador m){
         if(esTurnoDeEsteJugador(j)){
@@ -417,18 +448,21 @@ public class Mesa implements ar.edu.unlu.poo.interfaz.IMesa {
     }
 
 
+    //metodo: devuelve una interfaz de la clase dealer.
     @Override
     public IDealer getDealer(){
         return dealer;
     }
 
 
+    //metodo: devuelve el estado actual que posee la mesa.
     @Override
     public EstadoDeLaMesa getEstado(){
         return estado;
     }
 
 
+    //metodo: devuelve el nombre del jugador que esta jugando actualmente.
     @Override
     public String getJugadorTurnoActual(){
         if(turnoActual == null){
@@ -439,6 +473,7 @@ public class Mesa implements ar.edu.unlu.poo.interfaz.IMesa {
     }
 
 
+    //metodo: devuelve una lista con todas las interfaces de los jugadores que actualmente se encuentran jugando en la mesa.
     @Override
     public List<IJugador> getInscriptos(){
         List<IJugador> jugadores = new ArrayList<IJugador>();

@@ -31,6 +31,8 @@ public class Casino implements ICasino {
     }
     */
 
+
+    //metodo: devuelve una lista de interfaces de los jugadores que se encuentran conectados en el casino.
     @Override
     public List<IJugador> getJugadoresConectados(Jugador jug){
         List<IJugador> jugadores = new ArrayList<IJugador>();
@@ -46,24 +48,32 @@ public class Casino implements ICasino {
         return jugadores;
     }
 
+
+    //metodo: devuelve la interfaz de la mesa solo si es que estas inscripto dentro de ella.
     @Override
     public IMesa getMesa(Jugador j){
-        if(jugardoEnLaMesa(j)) {
+        if(jugardoEnLaMesa(j)){
             return mesa;
         }
 
         return null;
     }
 
+
+    //metodo: informa si el jugador pasado por parametro esta inscripto dentro de la mesa.
     private boolean jugardoEnLaMesa(Jugador j){
         return mesa.jugadorEnLaMesa(j);
     }
 
+
+    //metodo: devuelve la longitud que posee la lista de espera.
     @Override
     public int getLongitudListaDeEspera(){
         return listaDeEspera.size();
     }
 
+
+    //metodo: devuelve la posicion del jugador pasado por parametro dentro de la lista de espera. Si no esta, devuelve - 1.
     @Override
     public int miPosicionEnListaDeEspera(Jugador j){
         if(estoyEnListaDeEspera(j)) {
@@ -73,18 +83,26 @@ public class Casino implements ICasino {
         return -1;
     }
 
+
+    //metodo: informa si un jugador esta en la lista de espera.
     private boolean estoyEnListaDeEspera(Jugador j){
         return listaDeEspera.contains(j);
     }
 
+
+    //metodo: informa si hay jugadores en la lista de espera.
     private boolean hayJugadoresEsperando(){
         return !listaDeEspera.isEmpty();
     }
 
+
+    //metodo: informa si el jugador pasado por parametro esta dentro de la lista de conectados del casino.
     private boolean estoyConectado(Jugador j){
         return conectados.contains(j);
     }
 
+
+    //metodo: permite a un jugador unirse al casino.
     @Override
     public Eventos unirmeAlCasino(Jugador j){
         if(!estoyConectado(j)){
@@ -97,6 +115,8 @@ public class Casino implements ICasino {
         return Eventos.JUGADOR_YA_INSCRIPTO;
     }
 
+
+    //metodo: permite a un jugador dentro del casino a retirarse si es que no esta jugando dentro de la mesa.
     @Override
     public Eventos irmeDelCasino(Jugador j){
         if(estoyConectado(j)) {
@@ -118,6 +138,8 @@ public class Casino implements ICasino {
         return Eventos.JUGADOR_NO_ESTA;
     }
 
+
+    //metodo: permite a un jugador unirse a la lista de espera si es que se cumplen las condiciones.
     @Override
     public Eventos unirmeALaListaDeEspera(Jugador j, double monto){
         if(estoyConectado(j)) {
@@ -146,6 +168,8 @@ public class Casino implements ICasino {
         return Eventos.JUGADOR_NO_ESTA;
     }
 
+
+    //metodo: permite al jugador pasado por parametro salir de la lista de espera si es que este esta dentro de la misma.
     @Override
     public Eventos salirListaDeEspera(Jugador j){
         if(estoyEnListaDeEspera(j)){
@@ -159,6 +183,8 @@ public class Casino implements ICasino {
         return Eventos.JUGADOR_NO_ESTA;
     }
 
+
+    //metodo: permiete a un jugador conectado dentro del casino unirse a la mesa si es que se cumplen las condiciones.
     @Override
     public Eventos unirmeALaMesa(Jugador j, double monto){
         if(estoyConectado(j)){
@@ -184,6 +210,8 @@ public class Casino implements ICasino {
         return Eventos.JUGADOR_NO_ESTA;
     }
 
+
+    //metodo: permite a agregar a un jugador de la lista de espera a la mesa, si es que se cumplen las condiciones.
     private boolean agregarJugadorEsperando(Jugador j, double monto){
         Eventos situacion = mesa.inscribirJugadorNuevo(j, monto);
 
