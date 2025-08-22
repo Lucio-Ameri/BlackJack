@@ -1,6 +1,7 @@
 package ar.edu.unlu.poo.interfaz;
 
 import ar.edu.unlu.poo.modelo.Jugador;
+import ar.edu.unlu.poo.modelo.Mesa;
 import ar.edu.unlu.poo.modelo.evento.Eventos;
 
 import java.util.List;
@@ -16,4 +17,8 @@ public interface ICasino {
     Eventos unirmeALaListaDeEspera(Jugador j, double monto);
     Eventos salirListaDeEspera(Jugador j);
     Eventos unirmeALaMesa(Jugador j, double monto);
+
+
+    //funcion que solo sirve para el testing, si no se testea comentarla.
+    //Mesa getMesa();
 }

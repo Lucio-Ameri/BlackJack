@@ -24,11 +24,18 @@ public class Casino implements ICasino {
         //agregar a this como observador de mesa.
     }
 
+    //funcion que sirve solo para el test, comentarla si no se testea. COMENTAR TAMBIEN EN ICASINO.
+    /*
+    public Mesa getMesa(){
+        return mesa;
+    }
+    */
+
     @Override
     public List<IJugador> getJugadoresConectados(Jugador jug){
         List<IJugador> jugadores = new ArrayList<IJugador>();
 
-        if(conectados.isEmpty() || estoyConectado(jug)){
+        if(conectados.isEmpty() || !estoyConectado(jug)){
             return jugadores;
         }
 
